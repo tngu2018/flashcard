@@ -28,7 +28,7 @@
         .flashcard-container {
             width: 100%;
             max-width: 450px;
-            height: 320px;
+            height: 340px;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -65,11 +65,12 @@
             font-size: 2.2rem;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .card-front .reading {
             font-size: 1.2rem;
             color: #7f8c8d;
+            margin-bottom: 15px;
         }
         .card-back {
             transform: rotateY(180deg);
@@ -89,12 +90,19 @@
             width: 100%;
             border-left: 4px solid #2ecc71;
             text-align: left;
+            position: relative;
+        }
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
         }
         .example-jp {
             font-weight: bold;
             color: #34495e;
             font-size: 0.95rem;
-            margin-bottom: 4px;
+            padding-right: 10px;
         }
         .example-reading {
             font-size: 0.85rem;
@@ -105,13 +113,48 @@
             font-size: 0.9rem;
             color: #555;
         }
+        
+        /* Speaker Buttons Style */
+        .btn-audio {
+            background: #eef5fc;
+            color: #4a90e2;
+            border: 1px solid #4a90e2;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-audio:hover {
+            background: #4a90e2;
+            color: #ffffff;
+            transform: scale(1.08);
+        }
+        .btn-audio-sm {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+            background: #eafaf1;
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+            flex-shrink: 0;
+        }
+        .btn-audio-sm:hover {
+            background: #2ecc71;
+            color: #ffffff;
+        }
+
         .controls {
             margin-top: 25px;
             display: flex;
             gap: 15px;
             align-items: center;
         }
-        button {
+        .btn-nav {
             background-color: #4a90e2;
             color: white;
             border: none;
@@ -121,7 +164,7 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        button:hover {
+        .btn-nav:hover {
             background-color: #357abd;
         }
         .counter {
@@ -142,14 +185,20 @@
 
     <div class="flashcard-container" onclick="flipCard()">
         <div class="card" id="card">
+            <!-- Mặt trước -->
             <div class="card-face card-front">
                 <div class="kanji" id="kanji">---</div>
                 <div class="reading" id="reading">---</div>
+                <button class="btn-audio" onclick="speakWord(event)" title="Phát âm từ vựng">🔊</button>
             </div>
+            <!-- Mặt sau -->
             <div class="card-face card-back">
                 <div class="meaning" id="meaning">---</div>
                 <div class="example-box">
-                    <div class="example-jp" id="ex-jp">---</div>
+                    <div class="example-header">
+                        <div class="example-jp" id="ex-jp">---</div>
+                        <button class="btn-audio btn-audio-sm" onclick="speakExample(event)" title="Đọc câu ví dụ">🔊</button>
+                    </div>
                     <div class="example-reading" id="ex-read">---</div>
                     <div class="example-vi" id="ex-vi">---</div>
                 </div>
@@ -158,9 +207,9 @@
     </div>
 
     <div class="controls">
-        <button onclick="prevCard(event)">❮ Trước</button>
+        <button class="btn-nav" onclick="prevCard(event)">❮ Trước</button>
         <span class="counter" id="counter">1 / 100</span>
-        <button onclick="nextCard(event)">Sau ❯</button>
+        <button class="btn-nav" onclick="nextCard(event)">Sau ❯</button>
     </div>
 
     <div class="hint">Chạm/Click vào thẻ để lật xem mặt sau</div>
@@ -309,6 +358,31 @@
                 currentIndex--;
                 updateCard();
             }
+        }
+
+        // Hàm phát âm tiếng Nhật
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Dừng câu đang đọc nếu có
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.9; // Tốc độ đọc vừa phải
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ tính năng phát âm.");
+            }
+        }
+
+        function speakWord(event) {
+            event.stopPropagation(); // Không cho lật thẻ khi bấm nút loa
+            const item = verbs[currentIndex];
+            speakText(item.r); // Đọc theo hiragana để đạt chuẩn âm
+        }
+
+        function speakExample(event) {
+            event.stopPropagation(); // Không cho lật thẻ khi bấm nút loa
+            const item = verbs[currentIndex];
+            speakText(item.ej);
         }
 
         // Khởi tạo thẻ đầu tiên
