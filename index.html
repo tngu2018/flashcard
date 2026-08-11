@@ -1,209 +1,318 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flashcards Từ Vựng Tiếng Nhật - Chữ あ</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-      background-color: #f0f4f8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    h1 {
-      margin-bottom: 8px;
-      color: #1e293b;
-      text-align: center;
-    }
-    p.subtitle {
-      margin-bottom: 24px;
-      color: #64748b;
-      font-size: 14px;
-      text-align: center;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      width: 100%;
-      max-width: 1200px;
-    }
-    /* Thẻ Flashcard */
-    .card {
-      height: 240px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-    /* Mặt trước */
-    .card-front {
-      background-color: #ffffff;
-      color: #0f172a;
-      border: 1px solid #e2e8f0;
-    }
-    .card-front .kanji {
-      font-size: 28px;
-      font-weight: bold;
-      color: #2563eb;
-      margin-top: 10px;
-    }
-    .card-front .reading {
-      font-size: 16px;
-      color: #64748b;
-    }
-    .card-front .meaning-preview {
-      font-size: 15px;
-      font-weight: 600;
-      color: #334155;
-    }
-    /* Mặt sau */
-    .card-back {
-      background-color: #1e293b;
-      color: #f8fafc;
-      transform: rotateY(180deg);
-    }
-    .card-back .example-jp {
-      font-size: 16px;
-      line-height: 1.4;
-      color: #38bdf8;
-      font-weight: 500;
-      margin-top: 10px;
-    }
-    .card-back .example-vi {
-      font-size: 14px;
-      color: #94a3b8;
-      font-style: italic;
-    }
-    /* Nút phát âm */
-    .audio-btn {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .audio-btn:hover {
-      background: #2563eb;
-    }
-    .audio-btn:active {
-      transform: scale(0.95);
-    }
-    .audio-btn.sentence {
-      background: #f97316;
-    }
-    .audio-btn.sentence:hover {
-      background: #ea580c;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Động Từ Tiếng Nhật (Chữ あ) - Flashcards</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        .flashcard-container {
+            width: 100%;
+            max-width: 450px;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            text-align: center;
+            background: #ffffff;
+        }
+        .card-front {
+            border: 2px solid #4a90e2;
+        }
+        .card-front .kanji {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .card-front .reading {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            background: #fdfdfd;
+            border: 2px solid #2ecc71;
+            justify-content: space-around;
+        }
+        .meaning {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .example-box {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            border-left: 4px solid #2ecc71;
+            text-align: left;
+        }
+        .example-jp {
+            font-weight: bold;
+            color: #34495e;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .example-reading {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+        }
+        .example-vi {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+        .counter {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+        }
+        .hint {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>DANH SÁCH TỪ VỰNG TIẾNG NHẬT (CHỮ あ)</h1>
-  <p class="subtitle">Nhấp vào thẻ để lật mặt xem ví dụ | Bấm nút hình loa để nghe phát âm Tiếng Nhật</p>
+    <h1>Flashcard 100 Động Từ Tiếng Nhật (あ)</h1>
 
-  <div class="container" id="flashcard-container"></div>
-
-  <script>
-    // Dữ liệu từ vựng trích xuất từ file MD
-    const vocabData = [
-      { vocab: "ああ言う", reading: "ああいう", meaning: "Nói như thế, nói như vậy", sentence: "ああ言う言い方は失礼だと思う。", sentenceMeaning: "Tôi nghĩ cách nói như thế là thất lễ." },
-      { vocab: "ああなる", reading: "ああなる", meaning: "Trở nên như thế, thành ra như thế", sentence: "準備不足だから、ああなるのは当たり前だ。", sentenceMeaning: "Vì chuẩn bị không kỹ nên thành ra như thế là lẽ tự nhiên." },
-      { vocab: "相争う", reading: "あいあらそう", meaning: "Tranh giành nhau, tranh chấp lẫn nhau", sentence: "二人の巨頭が相争う。", sentenceMeaning: "Hai vị cựu lãnh đạo tranh giành lẫn nhau." },
-      { vocab: "愛飲する", reading: "あいいんする", meaning: "Thích uống, thường xuyên uống", sentence: "父は毎朝緑茶を愛飲している。", sentenceMeaning: "Bố tôi mỗi sáng đều thích uống trà xanh." },
-      { vocab: "相打つ", reading: "あいうつ", meaning: "Đánh trả lẫn nhau, hòa nhau", sentence: "両者が相打つ形となった。", sentenceMeaning: "Cả hai bên rơi vào thế đánh ngang ngửa hòa nhau." },
-      { vocab: "愛玩する", reading: "あいがんする", meaning: "Yêu thương, cưng chiều", sentence: "小鳥を愛玩する。", sentenceMeaning: "Cưng chiều chú chim nhỏ." },
-      { vocab: "挨拶する", reading: "あいさつする", meaning: "Chào hỏi", sentence: "毎朝近所の人に挨拶する。", sentenceMeaning: "Mỗi sáng tôi đều chào hỏi người hàng xóm." },
-      { vocab: "愛する", reading: "あいする", meaning: "Yêu, yêu thương", sentence: "家族を深く愛している。", sentenceMeaning: "Tôi yêu gia đình sâu sắc." },
-      { vocab: "諦める", reading: "あきらめる", meaning: "Từ bỏ, bỏ cuộc", sentence: "夢を諦めない。", sentenceMeaning: "Không từ bỏ ước mơ." },
-      { vocab: "握手する", reading: "あくしゅする", meaning: "Bắt tay", sentence: "ガッチリと握手する。", sentenceMeaning: "Bắt tay thật chặt." }
-    ];
-
-    // Tạo HTML cho từng Flashcard
-    const container = document.getElementById('flashcard-container');
-
-    vocabData.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.onclick = function() { this.classList.toggle('flipped'); };
-
-      card.innerHTML = `
-        <div class="card-inner">
-          <div class="card-front">
-            <div class="kanji">${item.vocab}</div>
-            <div class="reading">【${item.reading}】</div>
-            <div class="meaning-preview">${item.meaning}</div>
-            <button class="audio-btn" onclick="speakJapanese(event, '${item.reading}')">
-              🔊 Đọc từ
-            </button>
-          </div>
-          <div class="card-back">
-            <div class="example-jp">"${item.sentence}"</div>
-            <div class="example-vi">${item.sentenceMeaning}</div>
-            <button class="audio-btn sentence" onclick="speakJapanese(event, '${item.sentence}')">
-              🔊 Đọc câu
-            </button>
-          </div>
+    <div class="flashcard-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="kanji" id="kanji">---</div>
+                <div class="reading" id="reading">---</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="meaning" id="meaning">---</div>
+                <div class="example-box">
+                    <div class="example-jp" id="ex-jp">---</div>
+                    <div class="example-reading" id="ex-read">---</div>
+                    <div class="example-vi" id="ex-vi">---</div>
+                </div>
+            </div>
         </div>
-      `;
-      container.appendChild(card);
-    });
+    </div>
 
-    // Hàm phát âm tiếng Nhật bằng Web Speech API
-    function speakJapanese(event, text) {
-      event.stopPropagation(); // Ngăn sự kiện lật thẻ khi bấm nút đọc
+    <div class="controls">
+        <button onclick="prevCard(event)">❮ Trước</button>
+        <span class="counter" id="counter">1 / 100</span>
+        <button onclick="nextCard(event)">Sau ❯</button>
+    </div>
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Dừng câu đang đọc trước đó
+    <div class="hint">Chạm/Click vào thẻ để lật xem mặt sau</div>
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ja-JP'; // Thiết lập giọng đọc Tiếng Nhật
-        utterance.rate = 0.85;    // Tốc độ đọc tự nhiên cho người học
+    <script>
+        const verbs = [
+            { k: "ああ言う", r: "ああいう", m: "Nói như thế, nói như vậy", ej: "ああ言う言い方は失礼だと思う。", er: "ああいう いいかた は しつれい だ と おもう。", ev: "Tôi nghĩ cách nói như thế là thất lễ." },
+            { k: "ああなる", r: "ああなる", m: "Trở nên như thế, thành ra như thế", ej: "準備不足だから、ああなるのは当たり前だ。", er: "じゅんびぶそく だから、ああなる の は あたりまえ だ。", ev: "Vì chuẩn bị không kỹ nên thành ra như thế là lẽ tự nhiên." },
+            { k: "相争う", r: "あいあらそう", m: "Tranh giành nhau, tranh chấp lẫn nhau", ej: "二人の巨頭が相争う。", er: "ふたり の きょとう が あいあらそう。", ev: "Hai vị cựu lãnh đạo tranh giành lẫn nhau." },
+            { k: "愛飲する", r: "あいいんする", m: "Thích uống, thường xuyên uống", ej: "父は毎朝緑茶を愛飲している。", er: "ちち は まいあさ りょくちゃ を あいいん している。", ev: "Bố tôi mỗi sáng đều thích uống trà xanh." },
+            { k: "相打つ", r: "あいうつ", m: "Đánh trả lẫn nhau, hòa nhau", ej: "両者が相打つ形となった。", er: "りょうしゃ が あいうつ かたち と なった。", ev: "Cả hai bên rơi vào thế đánh ngang ngửa hòa nhau." },
+            { k: "愛玩する", r: "あいがんする", m: "Yêu thương, cưng chiều", ej: "小鳥を愛玩する。", er: "ことり を あいがん する。", ev: "Cưng chiều chú chim nhỏ." },
+            { k: "哀願する", r: "あいがんする", m: "Van xin, khẩn cầu", ej: "許してくれと哀願する。", er: "ゆるして くれ と あいがん する。", ev: "Van xin hãy tha lỗi cho tôi." },
+            { k: "哀歓を描く", r: "あいかんをえがく", m: "Miêu tả nỗi buồn và niềm vui", ej: "人の生の哀歓を描いた小説。", er: "ひと の せい の あいかん を えがいた しょうせつ。", ev: "Cuốn tiểu thuyết miêu tả những vui buồn của kiếp nhân sinh." },
+            { k: "哀感を覚える", r: "あいかんをおぼえる", m: "Cảm thấy u buồn, thương cảm", ej: "秋の光景に哀感を覚える。", er: "あき の こうけい に あいかん を おぼえる。", ev: "Cảm thấy u buồn trước cảnh sắc mùa thu." },
+            { k: "相競う", r: "あいきそう", m: "Cạnh tranh lẫn nhau, thi đua", ej: "ライバル同士が相競う。", er: "らいばる どうし が あいきそう。", ev: "Các đối thủ cạnh tranh gay gắt với nhau." },
+            { k: "愛吟する", r: "あいぎんする", m: "Thích ngâm thơ, ngâm nga", ej: "名詩を愛吟する。", er: "めいし を あいぎん する。", ev: "Thích ngâm những bài thơ nổi tiếng." },
+            { k: "愛好する", r: "あいこうする", m: "Yêu thích, hâm mộ", ej: "クラシック音楽を愛好する。", er: "くらっしく おんがく を あいこう する。", ev: "Yêu thích nhạc cổ điển." },
+            { k: "相呼応する", r: "あいこおうする", m: "Hưởng ứng lẫn nhau, phối hợp", ej: "民衆の動きと相呼応する。", er: "みんしゅう の うごき と あいこおう する。", ev: "Hưởng ứng nhịp nhàng với phong trào của nhân dân." },
+            { k: "愛顧する", r: "あいこする", m: "Ủng hộ, chiếu cố", ej: "長年愛顧していただいたお客様。", er: "ながねん あいこ して いただいた おきゃくさま。", ev: "Những khách hàng đã ủng hộ trong nhiều năm." },
+            { k: "愛護する", r: "あいごする", m: "Bảo vệ, yêu thương (động vật)", ej: "動物を愛護する活動に参加する。", er: "どうぶつ を あいご する かつどう に さんか する。", ev: "Tham gia hoạt động bảo vệ động vật." },
+            { k: "相異なる", r: "あいことなる", m: "Khác biệt nhau, trái ngược nhau", ej: "二人の意見は相異なる。", er: "ふたり の いけん は あいことなる。", ev: "Ý kiến của hai người hoàn toàn khác nhau." },
+            { k: "挨拶する", r: "あいさつする", m: "Chào hỏi", ej: "毎朝近所の人に挨拶する。", er: "まいあさ きんじょ の ひと に あいさつ する。", ev: "Mỗi sáng tôi đều chào hỏi người hàng xóm." },
+            { k: "挨拶回りする", r: "あいさつまわりする", m: "Đi chào hỏi xã giao", ej: "新年の挨拶回りをする。", er: "しんねん の あいさつまわり を する。", ev: "Đi chào hỏi chúc Tết đầu năm." },
+            { k: "愛し合う", r: "あいしあう", m: "Yêu thương nhau", ej: "二人は深く愛し合っている。", er: "ふたり は ふかく あいしあっている。", ev: "Hai người yêu thương nhau sâu sắc." },
+            { k: "愛着する", r: "あいちゃくする", m: "Gắn bó, lưu luyến", ej: "古い道具に愛着する。", er: "ふるい どうぐ に あいちゃく する。", ev: "Gắn bó tha thiết với đồ vật cũ." },
+            { k: "哀愁漂う", r: "あいしゅうただよう", m: "Phảng phất nét u buồn", ej: "背中に哀愁が漂っている。", er: "せなか に あいしゅう が ただよっている。", ev: "Tấm lưng phảng phất nét u buồn." },
+            { k: "愛情込める", r: "あいじょうこめる", m: "Gửi gắm tình yêu thương", ej: "愛情込めた手料理を作る。", er: "あいじょう こめた てりょうり を つくる。", ev: "Nấu món ăn gia đình đầy tình yêu thương." },
+            { k: "愛称する", r: "あいしょうする", m: "Gọi bằng tên thân mật", ej: "みんなから愛称される。", er: "みんな から あいしょう される。", ev: "Được mọi người gọi bằng tên thân mật." },
+            { k: "愛唱する", r: "あいしょうする", m: "Yêu thích ca hát", ej: "校歌を愛唱する。", er: "こうか を あいしょう する。", ev: "Yêu thích hát bài hát truyền thống của trường." },
+            { k: "相知る", r: "あいしる", m: "Quen biết nhau, hiểu nhau", ej: "相知る仲となる。", er: "あいしる なか と なる。", ev: "Trở thành tri kỷ quen biết nhau từ lâu." },
+            { k: "合図する", r: "あいずする", m: "Ra hiệu, ra tín hiệu", ej: "手を振って合図する。", er: "て を ふって あいず する。", ev: "Vẫy tay để ra hiệu." },
+            { k: "相済む", r: "あいすむ", m: "Xong xuôi, dàn xếp ổn thỏa", ej: "それであい済む問題ではない。", er: "それ で あいすむ もんだい で は ない。", ev: "Đó không phải là vấn đề có thể dàn xếp xong như vậy." },
+            { k: "愛する", r: "あいする", m: "Yêu, yêu thương", ej: "家族を深く愛している。", er: "かぞく を ふかく あいしている。", ev: "Tôi yêu gia đình sâu sắc." },
+            { k: "哀請する", r: "あいせいする", m: "Nài xin, van lạy", ej: "減刑を哀請する。", er: "げんけい を あいせい する。", ev: "Van xin được giảm án." },
+            { k: "相席する", r: "あいせきする", m: "Ngồi chung bàn (ở quán)", ej: "混雑しているので相席する。", er: "こんざつ しているので あいせき する。", ev: "Vì quán đông nên ngồi chung bàn." },
+            { k: "愛惜する", r: "あいせきする", m: "Trân trọng, tiếc nuối", ej: "別れを愛惜する。", er: "わかれ を あいせき する。", ev: "Tiếc nuối giây phút chia tay." },
+            { k: "哀惜する", r: "あいせきする", m: "Thương tiếc (người đã mất)", ej: "故人の死を哀惜する。", er: "こじん の し を あいせき する。", ev: "Thương tiếc sự ra đi của người đã khuất." },
+            { k: "相前後する", r: "あいぜんごする", m: "Xảy ra tiếp nối nhau", ej: "二つの事件が相前後して起きた。", er: "ふたつ の じけん が あいぜんご して おきた。", ev: "Hai vụ án xảy ra tiếp nối nhau." },
+            { k: "愛蔵する", r: "あいぞうする", m: "Tàng trữ, cất giữ kỷ niệm", ej: "初版本を愛蔵する。", er: "しょはんぼん を あいぞう する。", ev: "Cất giữ cẩn thận bản in đầu tiên." },
+            { k: "愛想尽かす", r: "あいそうつかす", m: "Chán ngấy, mất hết tình cảm", ej: "彼のわがままに愛想を尽かす。", er: "かれ の わがまま に あいそう を つかす。", ev: "Chán ngấy tính ích kỷ của anh ta." },
+            { k: "哀訴する", r: "あいそする", m: "Kêu van, khóc lóc tố cáo", ej: "無実を哀訴する。", er: "むじつ を あいそ する。", ev: "Khóc lóc kêu van về sự vô tội của mình." },
+            { k: "愛想笑いする", r: "あいそわらいする", m: "Cười xã giao, cười gượng", ej: "上司の前で愛想笑いする。", er: "じょうし の まえ で あいそわらい する。", ev: "Cười xã giao trước mặt sếp." },
+            { k: "相対する", r: "あいたいする", m: "Đối mặt, đối diện nhau", ej: "正面から向き合って相対する。", er: "しょうめん から むきあって あいたい する。", ev: "Đối mặt trực tiếp với nhau." },
+            { k: "間食いする", r: "あいだぐいする", m: "Ăn vặt giữa các bữa chính", ej: "間食いする癖をやめる。", er: "あいだぐい する くせ を やめる。", ev: "Bỏ thói quen ăn vặt giữa bữa." },
+            { k: "相戦う", r: "あいたたかう", m: "Giao chiến với nhau", ej: "二大勢力が相戦う。", er: "にだい せいりょく が あいたたかう。", ev: "Hai thế lực lớn giao chiến với nhau." },
+            { k: "愛着持つ", r: "あいちゃくもつ", m: "Có cảm tình, tình cảm gắn bó", ej: "長年使った車に愛着を持つ。", er: "ながねん つかった くるま に あいちゃく を もつ。", ev: "Có tình cảm gắn bó với chiếc xe dùng nhiều năm." },
+            { k: "愛聴する", r: "あいちょうする", m: "Thích nghe (nhạc, đài)", ej: "このラジオ番組を毎夜愛聴している。", er: "この らじお ばんぐみ を まいや あいちょう している。", ev: "Mỗi đêm tôi đều thích nghe chương trình đài này." },
+            { k: "相通ずる", r: "あいつうずる", m: "Thấu hiểu, có điểm chung", ej: "底流で相通ずるものがある。", er: "ていりゅう で あいつうずる もの が ある。", ev: "Có điểm chung thấu hiểu ở chiều sâu cốt lõi." },
+            { k: "相次ぐ", r: "あいつぐ", m: "Xảy ra liên tiếp, dồn dập", ej: "事故が相次いで発生した。", er: "じこ が あいついで はっせい した。", ev: "Các vụ tai nạn xảy ra liên tiếp." },
+            { k: "相続く", r: "あいつづく", m: "Tiếp tục diễn ra, nối tiếp", ej: "晴天が相続く。", er: "せいてん が あいつづく。", ev: "Thời tiết đẹp tiếp tục kéo dài." },
+            { k: "相手する", r: "あいてする", m: "Tiếp chuyện, đối phó", ej: "子供の相手をする。", er: "こども の あいて を する。", ev: "Chơi và tiếp chuyện với trẻ con." },
+            { k: "相照らす", r: "あいてらす", m: "Soi chiếu lẫn nhau, đối chiếu", ej: "理論と実践を相照らす。", er: "りろん と じっせん を あいてらす。", ev: "Soi chiếu giữa lý thuyết và thực tiễn." },
+            { k: "哀悼する", r: "あいとうする", m: "Chia buồn, kính tiếc", ej: "犠牲者の御霊を哀悼する。", er: "ぎせいしゃ の みたま を あいとう する。", ev: "Kính tiếc hương hồn các nạn nhân." },
+            { k: "愛読する", r: "あいどくする", m: "Thích đọc (sách, báo)", ej: "この雑誌を愛読している。", er: "この ざっし を あいどく している。", ev: "Tôi rất thích đọc tạp chí này." },
+            { k: "相伴う", r: "あいともなう", m: "Đi kèm, cùng lúc diễn ra", ej: "危険を相伴う作業。", er: "きけん を あいともなう さぎょう。", ev: "Công việc đi kèm với nguy hiểm." },
+            { k: "アイドリングする", r: "あいどりんぐする", m: "Chạy đà, nổ máy chờ", ej: "停車中にアイドリングする。", er: "ていしゃちゅう に あいどりんぐ する。", ev: "Nổ máy chờ trong lúc dừng xe." },
+            { k: "相半ばする", r: "あいなかばする", m: "Chia đôi, ngang ngửa (50-50)", ej: "期待と不安が相半ばする。", er: "きたい と ふあん が あいなかば する。", ev: "Niềm hy vọng và sự lo âu ngang ngửa nhau." },
+            { k: "相乗りする", r: "あいのりする", m: "Đi chung xe", ej: "タクシーに相乗りする。", er: "たくしー に あいのり する。", ev: "Đi chung xe taxi." },
+            { k: "相食む", r: "あいはむ", m: "Xâu xé lẫn nhau, tàn sát", ej: "仲間同士で相食む。", er: "なかま どうし で あいはむ。", ev: "Mấy người cùng hội xâu xé lẫn nhau." },
+            { k: "相反する", r: "あいはんする", m: "Mâu thuẫn, trái ngược nhau", ej: "相反する意見が対立する。", er: "あいはん する いけん が たいりつ する。", ev: "Các ý kiến trái ngược nhau tranh luận gay gắt." },
+            { k: "相反目する", r: "あいはんもくする", m: "Xung khắc lẫn nhau", ej: "両派が相反目する。", er: "りょうは が あいはんもく する。", ev: "Hai phe phái xung khắc lẫn nhau." },
+            { k: "逢引する", r: "あいびきする", m: "Hẹn hò lén lút", ej: "公園で逢引する。", er: "こうえん で あいびき する。", ev: "Hẹn hò lén lút ở công viên." },
+            { k: "愛慕する", r: "あいぼする", m: "Yêu mến và ngưỡng mộ", ej: "恩師を愛慕する。", er: "おんし を あいぼ する。", ev: "Yêu mến và kính trọng người thầy." },
+            { k: "相まつ", r: "あいまつ", m: "Hòa quyện, kết hợp với nhau", ej: "諸要因が相まって成功した。", er: "しょよういん が あいまって せいこう した。", ev: "Thành công nhờ sự kết hợp của nhiều yếu tố." },
+            { k: "相乱れる", r: "あいみだれる", m: "Hỗn loạn cùng nhau", ej: "髪が相乱れる。", er: "かみ が あいみだれる。", ev: "Tóc tai rối bời hỗn loạn." },
+            { k: "愛用する", r: "あいようする", m: "Thường xuyên sử dụng", ej: "この万年筆を愛用している。", er: "この まんねんひつ を あいよう している。", ev: "Tôi thường xuyên dùng chiếc bút máy này." },
+            { k: "相和す", r: "あいわす", m: "Hòa hợp, hòa quyện", ej: "声援と相和す。", er: "せいえん と あいわす。", ev: "Hòa quyện cùng tiếng reo hò cổ vũ." },
+            { k: "合う / 会う / 遇う", r: "あう", m: "Hợp / Gặp gỡ / Tình cờ gặp", ej: "友人と駅で会う。", er: "ゆうじん と えき で あう。", ev: "Gặp bạn bè ở ga tàu." },
+            { k: "アウトソーシングする", r: "あうとそーしんぐする", m: "Thuê ngoài (outsourcing)", ej: "業務を外部にアウトソーシングする。", er: "ぎょうむ を がいぶ に あうとそーしんぐ する。", ev: "Thuê ngoài thực hiện công việc." },
+            { k: "アウトプットする", r: "あうとぷっとする", m: "Bộc lộ, đưa ra kiến thức", ej: "学んだことをアウトプットする。", er: "まな broad こと を あうとぷっと する。", ev: "Bộc lộ/ứng dụng kiến thức đã học." },
+            { k: "和える", r: "あえる", m: "Trộn, bóp xốt (món ăn)", ej: "野菜をごまで和える。", er: "やさい を ごま で あえる。", ev: "Trộn rau củ với sốt mè." },
+            { k: "仰ぎ見る", r: "あおぎみる", m: "Ngước nhìn lên, tôn kính", ej: "夜空の星を仰ぎ見る。", er: "よぞら の ほし を あおぎみる。", ev: "Ngước nhìn ngôi sao trên bầu trời đêm." },
+            { k: "仰ぐ / あおぐ", r: "あおぐ", m: "Thỉnh cầu, ngước nhìn, quạt", ej: "指導を仰ぐ。", er: "しどう を あおぐ。", ev: "Thỉnh cầu sự chỉ đạo/hướng dẫn." },
+            { k: "青ざめる", r: "あおざめる", m: "Tái xanh mặt (vì sợ/bệnh)", ej: "驚きのあまり顔が青ざめる。", er: "おどろき の あまり かお が あおざめる。", ev: "Mặt tái xanh vì quá kinh ngạc." },
+            { k: "青ずむ", r: "あおずむ", m: "Trở nên xanh xao, ngả xanh", ej: "空が青ずんできた。", er: "そら が あおずんできた。", ev: "Bầu trời bắt đầu ngả xanh." },
+            { k: "青田買いする", r: "あおたがいする", m: "Tuyển dụng sinh viên sớm", ej: "企業が人材を青田買いする。", er: "きぎょう が じんざい を あおたがい する。", ev: "Doanh nghiệp tuyển dụng sớm các tài năng." },
+            { k: "あお向く", r: "あおむく", m: "Ngửa mặt lên", ej: "あお向いて空を見上げる。", er: "あおむいて そら を みあげる。", ev: "Ngửa mặt lên nhìn trời." },
+            { k: "あおる", r: "あおる", m: "Kích動, xúi giục", ej: "不安をあおる報道。", er: "ふあん を あおる ほうどう。", ev: "Đưa tin kích động sự lo lắng." },
+            { k: "アカウンティングする", r: "あかうんてぃんぐする", m: "Làm kế toán, kiểm toán", ej: "財務データをアカウンティングする。", er: "ざいむ でーた を あかうんてぃんぐ する。", ev: "Thực hiện hạch toán dữ liệu tài chính." },
+            { k: "あがく", r: "あがく", m: "Vẫy vùng trong vô vọng", ej: "悪条件の中であがく。", er: "あくじょうけん の なか で あがく。", ev: "Vùng vẫy trong điều kiện bất lợi." },
+            { k: "明かす", r: "あかす", m: "Tiết lộ (bí mật), thức suốt đêm", ej: "秘密を明かす。", er: "ひみつ を あかす。", ev: "Tiết lộ bí mật." },
+            { k: "あがなう", r: "あがなう", m: "Chuộc lỗi, đền bù", ej: "罪をあがなう。", er: "つみ を あがなう。", ev: "Chuộc lại lỗi lầm." },
+            { k: "あか抜ける", r: "あかぬける", m: "Trở nên sành điệu, lột xác", ej: "すっかりあか抜けた印象になる。", er: "すっかり あかぬけた いんしょう に なる。", ev: "Trở nên vô cùng sành điệu và cuốn hút." },
+            { k: "上がる / 揚がる / 挙がる", r: "あがる", m: "Tăng lên / Treo lên / Nêu lên", ej: "物価が上がる。", er: "ぶっか が あがる。", ev: "Giá cả hàng hóa tăng lên." },
+            { k: "諦める", r: "あきらめる", m: "Từ bỏ, bỏ cuộc", ej: "夢を諦めない。", er: "ゆめ を あきらめない。", ev: "Không từ bỏ ước mơ." },
+            { k: "飽きる", r: "あきる", m: "Chán, ngấy", ej: "同じ味に飽きる。", er: "おなじ あじ に あきる。", ev: "Chán ngấy cùng một hương vị." },
+            { k: "あきれる", r: "あきれる", m: "Sốc, cạn lời", ej: "彼の態度にあきれる。", er: "かれ の たいど に あきれる。", ev: "Cạn lời trước thái độ của anh ta." },
+            { k: "開く / 空く / 明く", r: "あく", m: "Mở / Trống / Bắt đầu", ej: "ドアが開く。", er: "どあ が あく。", ev: "Cánh cửa mở ra." },
+            { k: "握手する", r: "あくしゅする", m: "Bắt tay", ej: "ガッチリと握手する。", er: "がっちり と あくしゅ する。", ev: "Bắt tay thật chặt." },
+            { k: "アクセスする", r: "あくせすする", m: "Truy cập (website)", ej: "サイトにアクセスする。", er: "さいと に あくせす する。", ev: "Truy cập vào trang web." },
+            { k: "悪戦苦闘する", r: "あくせんくとうする", m: "Vật lộn, chiến đấu gian khổ", ej: "難問に悪戦苦闘する。", er: "なんもん に あくせんくとう する。", ev: "Vật lộn với bài toán khó." },
+            { k: "あくびする", r: "あくびする", m: "Ngáp", ej: "退屈であくびする。", er: "たいくつ で あくび する。", ev: "Vì nhàm chán nên ngáp." },
+            { k: "悪用する", r: "あくようする", m: "Lợi dụng, dùng sai mục đích", ej: "立場を悪用する。", er: "たちば を あくよう する。", ev: "Lợi dụng vị trí/chức vụ." },
+            { k: "あげつらう", r: "あげつらう", m: "Bắt bẻ, bới lông tìm vết", ej: "人の欠点をあげつらう。", er: "ひと の けってん を あげつらう。", ev: "Bới lông tìm vết khuyết điểm người khác." },
+            { k: "開ける / 空ける / 揚げる / 上げる", r: "あける / あげる", m: "Mở / Làm trống / Chiên / Nâng lên", ej: "窓を開ける。", er: "まど を あける。", ev: "Mở cửa sổ." },
+            { k: "憧れる", r: "あこがれる", m: "Ngưỡng mộ, mơ ước", ej: "日本での生活に憧れる。", er: "にほん で の せいかつ に あこがれる。", ev: "Mơ ước cuộc sống tại Nhật Bản." },
+            { k: "あざける", r: "あざける", m: "Nhạo báng, chế giễu", ej: "失敗をあざける。", er: "しっぱい を あざける。", ev: "Chế giễu thất bại của người khác." },
+            { k: "欺く", r: "あざむく", m: "Lừa dối, lừa lọc", ej: "敵を欺く。", er: "てき を あざむく。", ev: "Lừa dối kẻ địch." },
+            { k: "アシストする", r: "あしすとする", m: "Hỗ trợ, kiến tạo", ej: "ゴールをアシストする。", er: "ごーる を あしすと する。", ev: "Kiến tạo bàn thắng." },
+            { k: "味わう", r: "あじわう", m: "Thưởng thức, nếm trải", ej: "料理をじっくり味わう。", er: "りょうり を じっくり あじわう。", ev: "Thưởng thức kỹ món ăn." },
+            { k: "預ける", r: "あずける", m: "Gửi, giao ủy thác", ej: "荷物をロッカーに預ける。", er: "にもつ を ろっかー に あずける。", ev: "Gửi hành lý vào tủ đồ." },
+            { k: "焦る", r: "あせる", m: "Sốt ruột, nôn nóng", ej: "時間を気にして焦る。", er: "じかん を き に して あせる。", ev: "Sốt ruột vì để ý thời gian." },
+            { k: "遊ぶ", r: "あそぶ", m: "Chơi, giải trí", ej: "公園で子供と遊ぶ。", er: "こうえん で こども と あそぶ。", ev: "Chơi với con ở công viên." },
+            { k: "与える", r: "あたえる", m: "Ban cho, gây ra", ej: "影響を与える。", er: "えいきょう を あたえる。", ev: "Gây ra ảnh hưởng/tác động." },
+            { k: "温める / 暖める", r: "あたためる", m: "Làm ấm, hâm nóng", ej: "スープを温める。", er: "すーぷ を あたためる。", ev: "Hâm nóng tô súp." },
+            { k: "当たる", r: "あたる", m: "Trúng, đúng, va chạm", ej: "宝くじが当たる。", er: "たからくじ が あたる。", ev: "Trúng vé số." },
+            { k: "扱う", r: "あつかう", m: "Xử lý, thao tác, đối xử", ej: "丁寧に取り扱う。", er: "ていねい に とりあつかう。", ev: "Thao tác/xử lý cẩn thận." },
+            { k: "悪化する", r: "あっかする", m: "Trở nên tồi tệ, xấu đi", ej: "容態が悪化する。", er: "ようだい が あっか する。", ev: "Tình trạng sức khỏe xấu đi." },
+            { k: "圧縮する", r: "あっしゅくする", m: "Nén (file, không khí)", ej: "ファイルを圧縮する。", er: "ふぁいる を あっしゅく する。", ev: "Nén tệp tin." },
+            { k: "圧倒する", r: "あっとうする", m: "Áp đảo hoàn toàn", ej: "相手を圧倒する。", er: "あいて を あっとう する。", ev: "Áp đảo đối thủ." }
+        ];
 
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert('Trình duyệt của bạn không hỗ trợ chức năng phát âm!');
-      }
-    }
-  </script>
+        let currentIndex = 0;
+        const card = document.getElementById('card');
+
+        function updateCard() {
+            card.classList.remove('flipped');
+            setTimeout(() => {
+                const item = verbs[currentIndex];
+                document.getElementById('kanji').innerText = item.k;
+                document.getElementById('reading').innerText = item.r;
+                document.getElementById('meaning').innerText = item.m;
+                document.getElementById('ex-jp').innerText = item.ej;
+                document.getElementById('ex-read').innerText = item.er;
+                document.getElementById('ex-vi').innerText = item.ev;
+                document.getElementById('counter').innerText = `${currentIndex + 1} / ${verbs.length}`;
+            }, 150);
+        }
+
+        function flipCard() {
+            card.classList.toggle('flipped');
+        }
+
+        function nextCard(event) {
+            event.stopPropagation();
+            if (currentIndex < verbs.length - 1) {
+                currentIndex++;
+                updateCard();
+            }
+        }
+
+        function prevCard(event) {
+            event.stopPropagation();
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCard();
+            }
+        }
+
+        // Khởi tạo thẻ đầu tiên
+        updateCard();
+    </script>
 </body>
 </html>
