@@ -3,367 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flashcard Từ Vựng Tiếng Nhật (Chữ あ)</title>
+  <title>Flashcards Từ Vựng Tiếng Nhật - Chữ あ</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
       background-color: #f0f4f8;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
       padding: 20px;
     }
-
     h1 {
-      color: #1B365D;
       margin-bottom: 8px;
-      font-size: 22px;
+      color: #1e293b;
       text-align: center;
     }
-
-    .progress {
-      color: #555;
+    p.subtitle {
+      margin-bottom: 24px;
+      color: #64748b;
       font-size: 14px;
-      margin-bottom: 20px;
-      font-weight: 600;
+      text-align: center;
     }
-
-    .flashcard-container {
-      perspective: 1000px;
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
       width: 100%;
-      max-width: 420px;
-      height: 290px;
-      margin-bottom: 20px;
+      max-width: 1200px;
     }
-
-    .flashcard {
+    /* Thẻ Flashcard */
+    .card {
+      height: 240px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .card-inner {
+      position: relative;
       width: 100%;
       height: 100%;
-      position: relative;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
-      cursor: pointer;
       border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-
-    .flashcard.flipped {
+    .card.flipped .card-inner {
       transform: rotateY(180deg);
     }
-
-    .card-face {
+    .card-front, .card-back {
       position: absolute;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      border-radius: 16px;
-      background-color: #ffffff;
-      text-align: center;
-    }
-
-    .card-front {
-      border: 2px solid #1B365D;
-    }
-
-    .word-front {
-      font-size: 32px;
-      font-weight: bold;
-      color: #1B365D;
-      margin-bottom: 12px;
-    }
-
-    .hint {
-      font-size: 12px;
-      color: #888;
-      position: absolute;
-      bottom: 15px;
-    }
-
-    .card-back {
-      transform: rotateY(180deg);
-      border: 2px solid #2e7d32;
       justify-content: space-between;
+      align-items: center;
     }
-
-    .reading {
-      font-size: 16px;
-      color: #2e7d32;
-      font-weight: 600;
+    /* Mặt trước */
+    .card-front {
+      background-color: #ffffff;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
     }
-
-    .meaning {
-      font-size: 18px;
+    .card-front .kanji {
+      font-size: 28px;
       font-weight: bold;
-      color: #222;
-      margin: 6px 0;
+      color: #2563eb;
+      margin-top: 10px;
     }
-
-    .example-box {
-      background-color: #f8f9fa;
-      padding: 8px 12px;
-      border-radius: 8px;
-      width: 100%;
-      border-left: 3px solid #2e7d32;
-      text-align: left;
+    .card-front .reading {
+      font-size: 16px;
+      color: #64748b;
     }
-
-    .example {
-      font-size: 13px;
-      color: #333;
-      margin-bottom: 4px;
-    }
-
-    .example-meaning {
-      font-size: 12px;
-      color: #666;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      max-width: 420px;
-    }
-
-    button {
-      flex: 1;
-      padding: 14px;
+    .card-front .meaning-preview {
       font-size: 15px;
       font-weight: 600;
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      background-color: #1B365D;
+      color: #334155;
+    }
+    /* Mặt sau */
+    .card-back {
+      background-color: #1e293b;
+      color: #f8fafc;
+      transform: rotateY(180deg);
+    }
+    .card-back .example-jp {
+      font-size: 16px;
+      line-height: 1.4;
+      color: #38bdf8;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .card-back .example-vi {
+      font-size: 14px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+    /* Nút phát âm */
+    .audio-btn {
+      background: #3b82f6;
       color: white;
-      transition: background-color 0.2s, transform 0.1s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-
-    button.btn-secondary {
-      background-color: #f39c12;
-      flex: 0.8;
+    .audio-btn:hover {
+      background: #2563eb;
     }
-
-    button.btn-secondary:hover {
-      background-color: #d68910;
+    .audio-btn:active {
+      transform: scale(0.95);
     }
-
-    button:hover {
-      background-color: #0f2341;
+    .audio-btn.sentence {
+      background: #f97316;
     }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-      box-shadow: none;
+    .audio-btn.sentence:hover {
+      background: #ea580c;
     }
   </style>
 </head>
 <body>
 
-  <h1>Từ Vựng Tiếng Nhật (Chữ あ)</h1>
-  <div class="progress" id="progress">1 / 100</div>
+  <h1>DANH SÁCH TỪ VỰNG TIẾNG NHẬT (CHỮ あ)</h1>
+  <p class="subtitle">Nhấp vào thẻ để lật mặt xem ví dụ | Bấm nút hình loa để nghe phát âm Tiếng Nhật</p>
 
-  <div class="flashcard-container">
-    <div class="flashcard" id="card" onclick="flipCard()">
-      <div class="card-face card-front">
-        <div class="word-front" id="word-front">---</div>
-        <div class="hint">Chạm để xem nghĩa ➔</div>
-      </div>
-      <div class="card-face card-back">
-        <div class="reading" id="word-reading">---</div>
-        <div class="meaning" id="word-meaning">---</div>
-        <div class="example-box">
-          <div class="example" id="word-example">---</div>
-          <div class="example-meaning" id="word-example-meaning">---</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="controls">
-    <button id="btn-prev" onclick="prevCard()" disabled>◄ Trước</button>
-    <button class="btn-secondary" id="btn-shuffle" onclick="shuffleCards()">🔀 Trộn</button>
-    <button id="btn-next" onclick="nextCard()">Tiếp ►</button>
-  </div>
+  <div class="container" id="flashcard-container"></div>
 
   <script>
-    // Dữ liệu từ vựng trích xuất trực tiếp từ Markdown
-    let flashcards = [
-      { front: "ああ言う", reading: "ああいう", meaning: "Nói như thế, nói như vậy", example: "ああ言う言い方は失礼だと思う。", example_meaning: "Tôi nghĩ cách nói như thế là thất lễ." },
-      { front: "ああなる", reading: "ああなる", meaning: "Trở nên như thế, thành ra như thế", example: "準備不足だから、ああなるのは当たり前だ。", example_meaning: "Vì chuẩn bị không kỹ nên thành ra như thế là lẽ tự nhiên." },
-      { front: "相争う", reading: "あいあらそう", meaning: "Tranh giành nhau, tranh chấp lẫn nhau", example: "二人の巨頭が相争う。", example_meaning: "Hai vị cựu lãnh đạo tranh giành lẫn nhau." },
-      { front: "愛飲する", reading: "あいいんする", meaning: "Thích uống, thường xuyên uống", example: "父は毎朝緑茶を愛飲している。", example_meaning: "Bố tôi mỗi sáng đều thích uống trà xanh." },
-      { front: "相打つ", reading: "あいうつ", meaning: "Đánh trả lẫn nhau, hòa nhau", example: "両者が相打つ形となった。", example_meaning: "Cả hai bên rơi vào thế đánh ngang ngửa hòa nhau." },
-      { front: "愛玩する", reading: "あいがんする", meaning: "Yêu thương, cưng chiều", example: "小鳥を愛玩する。", example_meaning: "Cưng chiều chú chim nhỏ." },
-      { front: "哀願する", reading: "あいがんする", meaning: "Van xin, khẩn cầu", example: "許してくれと哀願する。", example_meaning: "Van xin hãy tha lỗi cho tôi." },
-      { front: "哀歓を描く", reading: "あいかんをえがく", meaning: "Miêu tả nỗi buồn và niềm vui", example: "人の生の哀歓を描いた小説。", example_meaning: "Cuốn tiểu thuyết miêu tả những vui buồn của kiếp nhân sinh." },
-      { front: "哀感を覚える", reading: "あいかんをおぼえる", meaning: "Cảm thấy u buồn, thương cảm", example: "秋の光景に哀感を覚える。", example_meaning: "Cảm thấy u buồn trước cảnh sắc mùa thu." },
-      { front: "相競う", reading: "あいきそう", meaning: "Cạnh tranh lẫn nhau, thi đua", example: "ライバル同士が相競う。", example_meaning: "Các đối thủ cạnh tranh gay gắt với nhau." },
-      { front: "愛吟する", reading: "あいぎんする", meaning: "Thích ngâm thơ, ngâm nga", example: "名詩を愛吟する。", example_meaning: "Thích ngâm những bài thơ nổi tiếng." },
-      { front: "愛好する", reading: "あいこうする", meaning: "Yêu thích, hâm mộ", example: "クラシック音楽を愛好する。", example_meaning: "Yêu thích nhạc cổ điển." },
-      { front: "相呼応する", reading: "あいこおうする", meaning: "Hưởng ứng lẫn nhau, phối hợp", example: "民衆の動きと相呼応する。", example_meaning: "Hưởng ứng nhịp nhàng với phong trào của nhân dân." },
-      { front: "愛顧する", reading: "あいこする", meaning: "Ủng hộ, chiếu cố", example: "長年愛顧していただいたお客様。", example_meaning: "Những khách hàng đã ủng hộ trong nhiều năm." },
-      { front: "愛護する", reading: "あいごする", meaning: "Bảo vệ, yêu thương (động vật)", example: "動物を愛護する活動に参加する。", example_meaning: "Tham gia hoạt động bảo vệ động vật." },
-      { front: "相異なる", reading: "あいことなる", meaning: "Khác biệt nhau, trái ngược nhau", example: "二人の意見は相異なる。", example_meaning: "Ý kiến của hai người hoàn toàn khác nhau." },
-      { front: "挨拶する", reading: "あいさつする", meaning: "Chào hỏi", example: "毎朝近所の人に挨拶する。", example_meaning: "Mỗi sáng tôi đều chào hỏi người hàng xóm." },
-      { front: "挨拶回りする", reading: "あいさつまわりする", meaning: "Đi chào hỏi xã giao", example: "新年の挨拶回りをする。", example_meaning: "Đi chào hỏi chúc Tết đầu năm." },
-      { front: "愛し合う", reading: "あいしあう", meaning: "Yêu thương nhau", example: "二人は深く愛し合っている。", example_meaning: "Hai người yêu thương nhau sâu sắc." },
-      { front: "愛着する", reading: "あいちゃくする", meaning: "Gắn bó, lưu luyến", example: "古い道具に愛着する。", example_meaning: "Gắn bó tha thiết với đồ vật cũ." },
-      { front: "哀愁漂う", reading: "あいしゅうただよう", meaning: "Phảng phất nét u buồn", example: "背中に哀愁が漂っている。", example_meaning: "Tấm lưng phảng phất nét u buồn." },
-      { front: "愛情込める", reading: "あいじょうこめる", meaning: "Gửi gắm tình yêu thương", example: "愛情込めた手料理を作る。", example_meaning: "Nấu món ăn gia đình đầy tình yêu thương." },
-      { front: "愛称する", reading: "あいしょうする", meaning: "Gọi bằng tên thân mật", example: "みんなから愛称される。", example_meaning: "Được mọi người gọi bằng tên thân mật." },
-      { front: "愛唱する", reading: "あいしょうする", meaning: "Yêu thích ca hát", example: "校歌を愛唱する。", example_meaning: "Yêu thích hát bài hát truyền thống của trường." },
-      { front: "相知る", reading: "あいしる", meaning: "Quen biết nhau, hiểu nhau", example: "相知る仲となる。", example_meaning: "Trở thành tri kỷ quen biết nhau từ lâu." },
-      { front: "合図する", reading: "あいずする", meaning: "Ra hiệu, ra tín hiệu", example: "手を振って合図する。", example_meaning: "Vẫy tay để ra hiệu." },
-      { front: "相済む", reading: "あいすむ", meaning: "Xong xuôi, dàn xếp ổn thỏa", example: "それで相済む問題ではない。", example_meaning: "Đó không phải là vấn đề có thể dàn xếp xong như vậy." },
-      { front: "愛する", reading: "あいする", meaning: "Yêu, yêu thương", example: "家族を深く愛している。", example_meaning: "Tôi yêu gia đình sâu sắc." },
-      { front: "哀請する", reading: "あいせいする", meaning: "Nài xin, van lạy", example: "減刑を哀請する。", example_meaning: "Van xin được giảm án." },
-      { front: "相席する", reading: "あいせきする", meaning: "Ngồi chung bàn (ở quán)", example: "混雑しているので相席する。", example_meaning: "Vì quán đông nên ngồi chung bàn." },
-      { front: "愛惜する", reading: "あいせきする", meaning: "Trân trọng, tiếc nuối", example: "別れを愛惜する。", example_meaning: "Tiếc nuối giây phút chia tay." },
-      { front: "哀惜する", reading: "あいせきする", meaning: "Thương tiếc (người đã mất)", example: "故人の死を哀惜する。", example_meaning: "Thương tiếc sự ra đi của người đã khuất." },
-      { front: "相前後する", reading: "あいぜんごする", meaning: "Xảy ra tiếp nối nhau", example: "二つの事件が相前後して起きた。", example_meaning: "Hai vụ án xảy ra tiếp nối nhau." },
-      { front: "愛蔵する", reading: "あいぞうする", meaning: "Tàng trữ, cất giữ kỷ niệm", example: "初版本を愛蔵する。", example_meaning: "Cất giữ cẩn thận bản in đầu tiên." },
-      { front: "愛想尽かす", reading: "あいそうつかす", meaning: "Chán ngấy, mất hết tình cảm", example: "彼のわがままに愛想を尽かす。", example_meaning: "Chán ngấy tính ích kỷ của anh ta." },
-      { front: "哀訴する", reading: "あいそする", meaning: "Kêu van, khóc lóc tố cáo", example: "無実を哀訴する。", example_meaning: "Khóc lóc kêu van về sự vô tội của mình." },
-      { front: "愛想笑いする", reading: "あいそわらいする", meaning: "Cười xã giao, cười gượng", example: "上司の前で愛想笑いする。", example_meaning: "Cười xã giao trước mặt sếp." },
-      { front: "相対する", reading: "あいたいする", meaning: "Đối mặt, đối diện nhau", example: "正面から向き合って相対する。", example_meaning: "Đối mặt trực tiếp với nhau." },
-      { front: "間食いする", reading: "あいだぐいする", meaning: "Ăn vặt giữa các bữa chính", example: "間食いする癖をやめる。", example_meaning: "Bỏ thói quen ăn vặt giữa bữa." },
-      { front: "相戦う", reading: "あいたたかう", meaning: "Giao chiến với nhau", example: "二大勢力が相戦う。", example_meaning: "Hai thế lực lớn giao chiến với nhau." },
-      { front: "愛着持つ", reading: "あいちゃくもつ", meaning: "Có cảm tình, tình cảm gắn bó", example: "長年使った車に愛着を持つ。", example_meaning: "Có tình cảm gắn bó với chiếc xe dùng nhiều năm." },
-      { front: "愛聴する", reading: "あいちょうする", meaning: "Thích nghe (nhạc, đài)", example: "このラジオ番組を毎夜愛聴している。", example_meaning: "Mỗi đêm tôi đều thích nghe chương trình đài này." },
-      { front: "相通ずる", reading: "あいつうずる", meaning: "Thấu hiểu, có điểm chung", example: "底流で相通ずるものがある。", example_meaning: "Có điểm chung thấu hiểu ở chiều sâu cốt lõi." },
-      { front: "相次ぐ", reading: "あいつぐ", meaning: "Xảy ra liên tiếp, dồn dập", example: "事故が相次いで発生した。", example_meaning: "Các vụ tai nạn xảy ra liên tiếp." },
-      { front: "相続く", reading: "あいつづく", meaning: "Tiếp tục diễn ra, nối tiếp", example: "晴天が相続く。", example_meaning: "Thời tiết đẹp tiếp tục kéo dài." },
-      { front: "相手する", reading: "あいてする", meaning: "Tiếp chuyện, đối phó", example: "子供の相手をする。", example_meaning: "Chơi và tiếp chuyện với trẻ con." },
-      { front: "相照らす", reading: "あいてらす", meaning: "Soi chiếu lẫn nhau, đối chiếu", example: "理論と実践を相照らす。", example_meaning: "Soi chiếu giữa lý thuyết và thực tiễn." },
-      { front: "哀悼する", reading: "あいとうする", meaning: "Chia buồn, kính tiếc", example: "犠牲者の御霊を哀悼する。", example_meaning: "Kính tiếc hương hồn các nạn nhân." },
-      { front: "愛読する", reading: "あいどくする", meaning: "Thích đọc (sách, báo)", example: "この雑誌を愛読している。", example_meaning: "Tôi rất thích đọc tạp chí này." },
-      { front: "相伴う", reading: "あいともなう", meaning: "Đi kèm, cùng lúc diễn ra", example: "危険を相伴う作業。", example_meaning: "Công việc đi kèm với nguy hiểm." },
-      { front: "アイドリングする", reading: "あいどりんぐする", meaning: "Chạy đà, nổ máy chờ", example: "停車中にアイドリングする。", example_meaning: "Nổ máy chờ trong lúc dừng xe." },
-      { front: "相半ばする", reading: "あいなかばする", meaning: "Chia đôi, ngang ngửa (50-50)", example: "期待と不安が相半ばする。", example_meaning: "Niềm hy vọng và sự lo âu ngang ngửa nhau." },
-      { front: "相乗りする", reading: "あいのりする", meaning: "Đi chung xe", example: "タクシーに相乗りする。", example_meaning: "Đi chung xe taxi." },
-      { front: "相食む", reading: "あいはむ", meaning: "Xâu xé lẫn nhau, tàn sát", example: "仲間同士で相食む。", example_meaning: "Mấy người cùng hội xâu xé lẫn nhau." },
-      { front: "相反する", reading: "あいはんする", meaning: "Mâu thuẫn, trái ngược nhau", example: "相反する意見が対立する。", example_meaning: "Các ý kiến trái ngược nhau tranh luận gay gắt." },
-      { front: "相反目する", reading: "あいはんもくする", meaning: "Xung khắc lẫn nhau", example: "両派が相反目する。", example_meaning: "Hai phe phái xung khắc lẫn nhau." },
-      { front: "逢引する", reading: "あいびきする", meaning: "Hẹn hò lén lút", example: "公園で逢引する。", example_meaning: "Hẹn hò lén lút ở công viên." },
-      { front: "愛慕する", reading: "あいぼする", meaning: "Yêu mến và ngưỡng mộ", example: "恩師を愛慕する。", example_meaning: "Yêu mến và kính trọng người thầy." },
-      { front: "相まつ", reading: "あいまつ", meaning: "Hòa quyện, kết hợp với nhau", example: "諸要因が相まって成功した。", example_meaning: "Thành công nhờ sự kết hợp của nhiều yếu tố." },
-      { front: "相乱れる", reading: "あいみだれる", meaning: "Hỗn乱 cùng nhau", example: "髪が相乱れる。", example_meaning: "Tóc tai rối bời hỗn乱." },
-      { front: "愛用する", reading: "あいようする", meaning: "Thường xuyên sử dụng", example: "この万年筆を愛用している。", example_meaning: "Tôi thường xuyên dùng chiếc bút máy này." },
-      { front: "相和す", reading: "あいわす", meaning: "Hòa hợp, hòa quyện", example: "声援と相和す。", example_meaning: "Hòa quyện cùng tiếng reo hò cổ vũ." },
-      { front: "合う / 会う / 遇う", reading: "あう", meaning: "Hợp / Gặp gỡ / Tình cờ gặp", example: "友人と駅で会う。", example_meaning: "Gặp bạn bè ở ga tàu." },
-      { front: "アウトソーシングする", reading: "あうとそーしんぐする", meaning: "Thuê ngoài (outsourcing)", example: "業務を外部にアウトソーシングする。", example_meaning: "Thuê ngoài thực hiện công việc." },
-      { front: "アウトプットする", reading: "あうとぷっとする", meaning: "Bộc lộ, đưa ra kiến thức", example: "学んだことをアウトプットする。", example_meaning: "Bộc lộ/ứng dụng kiến thức đã học." },
-      { front: "和える", reading: "あえる", meaning: "Trộn, bóp xốt (món ăn)", example: "野菜をごまで和える。", example_meaning: "Trộn rau củ với sốt mè." },
-      { front: "仰ぎ見る", reading: "あおぎみる", meaning: "Ngước nhìn lên, tôn kính", example: "夜空の星を仰ぎ見る。", example_meaning: "Ngước nhìn ngôi sao trên bầu trời đêm." },
-      { front: "仰ぐ / あおぐ", reading: "あおぐ", meaning: "Thỉnh cầu, ngước nhìn, quạt", example: "指導を仰ぐ。", example_meaning: "Thỉnh cầu sự chỉ đạo/hướng dẫn." },
-      { front: "青ざめる", reading: "あおざめる", meaning: "Tái xanh mặt (vì sợ/bệnh)", example: "驚きのあまり顔が青ざめる。", example_meaning: "Mặt tái xanh vì quá kinh ngạc." },
-      { front: "青ずむ", reading: "あおずむ", meaning: "Trở nên xanh xao, ngả xanh", example: "空が青ずんできた。", example_meaning: "Bầu trời bắt đầu ngả xanh." },
-      { front: "青田買いする", reading: "あおたがいする", meaning: "Tuyển dụng sinh viên sớm", example: "企業が人材を青田買いする。", example_meaning: "Doanh nghiệp tuyển dụng sớm các tài năng." },
-      { front: "あお向く", reading: "あおむく", meaning: "Ngửa mặt lên", example: "あお向いて空を見上げる。", example_meaning: "Ngửa mặt lên nhìn trời." },
-      { front: "あおる", reading: "あおる", meaning: "Kích động, xúi giục", example: "不安をあおる報道。", example_meaning: "Đưa tin kích động sự lo lắng." },
-      { front: "アカウンティングする", reading: "あかうんてぃんぐする", meaning: "Làm kế toán, kiểm toán", example: "財務データをアカウンティングする。", example_meaning: "Thực hiện hạch toán dữ liệu tài chính." },
-      { front: "あがく", reading: "あがく", meaning: "Vẫy vùng trong vô vọng", example: "悪条件の中であがく。", example_meaning: "Vùng vẫy trong điều kiện bất lợi." },
-      { front: "明かす", reading: "あかす", meaning: "Tiết lộ (bí mật), thức suốt đêm", example: "秘密を明かす。", example_meaning: "Tiết lộ bí mật." },
-      { front: "あがなう", reading: "あがなう", meaning: "Chuộc lỗi, đền bù", example: "罪をあがなう。", example_meaning: "Chuộc lại lỗi lầm." },
-      { front: "あか抜ける", reading: "あかぬける", meaning: "Trở nên sành điệu, lột xác", example: "すっかりあか抜けた印象になる。", example_meaning: "Trở nên vô cùng sành điệu và cuốn hút." },
-      { front: "上がる / 揚がる / 挙がる", reading: "あがる", meaning: "Tăng lên / Treo lên / Nêu lên", example: "物価が上がる。", example_meaning: "Giá cả hàng hóa tăng lên." },
-      { front: "諦める", reading: "あきらめる", meaning: "Từ bỏ, bỏ cuộc", example: "夢を諦めない。", example_meaning: "Không từ bỏ ước mơ." },
-      { front: "飽きる", reading: "あきる", meaning: "Chán, ngấy", example: "同じ味に飽きる。", example_meaning: "Chán ngấy cùng một hương vị." },
-      { front: "あきれる", reading: "あきれる", meaning: "Sốc, cạn lời", example: "彼の態度にあきれる。", example_meaning: "Cạn lời trước thái độ của anh ta." },
-      { front: "開く / 空く / 明く", reading: "あく", meaning: "Mở / Trống / Bắt đầu", example: "ドアが開く。", example_meaning: "Cánh cửa mở ra." },
-      { front: "握手する", reading: "あくしゅする", meaning: "Bắt tay", example: "ガッチリと握手する。", example_meaning: "Bắt tay thật chặt." },
-      { front: "アクセスする", reading: "あくせすする", meaning: "Truy cập (website)", example: "サイトにアクセスする。", example_meaning: "Truy cập vào trang web." },
-      { front: "悪戦苦闘する", reading: "あくせんくとうする", meaning: "Vật lộn, chiến đấu gian khổ", example: "難問に悪戦苦闘する。", example_meaning: "Vật lộn với bài toán khó." },
-      { front: "あくびする", reading: "あくびする", meaning: "Ngáp", example: "退屈であくびする。", example_meaning: "Vì nhàm chán nên ngáp." },
-      { front: "悪用する", reading: "あくようする", meaning: "Lợi dụng, dùng sai mục đích", example: "立場を悪用する。", example_meaning: "Lợi dụng vị trí/chức vụ." },
-      { front: "あげつらう", reading: "あげつらう", meaning: "Bắt bẻ, bới lông tìm vết", example: "人の欠点をあげつらう。", example_meaning: "Bới lông tìm vết khuyết điểm người khác." },
-      { front: "開ける / 空ける / 揚げる / 上げる", reading: "あける / あげる", meaning: "Mở / Làm trống / Chiên / Nâng lên", example: "窓を開ける。", example_meaning: "Mở cửa sổ." },
-      { front: "憧れる", reading: "あこがれる", meaning: "Ngưỡng mộ, mơ ước", example: "日本での生活に憧れる。", example_meaning: "Mơ ước cuộc sống tại Nhật Bản." },
-      { front: "あざける", reading: "あざける", meaning: "Nhạo báng, chế giễu", example: "失敗をあざける。", example_meaning: "Chế giễu thất bại của người khác." },
-      { front: "欺く", reading: "あざむく", meaning: "Lừa dối, lừa lọc", example: "敵を欺く。", example_meaning: "Lừa dối kẻ địch." },
-      { front: "アシストする", reading: "あしすとする", meaning: "Hỗ trợ, kiến tạo", example: "ゴールをアシストする。", example_meaning: "Kiến tạo bàn thắng." },
-      { front: "味わう", reading: "あじわう", meaning: "Thưởng thức, nếm trải", example: "料理をじっくり味わう。", example_meaning: "Thưởng thức kỹ món ăn." },
-      { front: "預ける", reading: "あずける", meaning: "Gửi, giao ủy thác", example: "荷物をロッカーに預ける。", example_meaning: "Gửi hành lý vào tủ đồ." },
-      { front: "焦る", reading: "あせる", meaning: "Sốt ruột, nôn nóng", example: "時間を気にして焦る。", example_meaning: "Sốt ruột vì để ý thời gian." },
-      { front: "遊ぶ", reading: "あそぶ", meaning: "Chơi, giải trí", example: "公園で子供と遊ぶ。", example_meaning: "Chơi với con ở công viên." },
-      { front: "与える", reading: "あたえる", meaning: "Ban cho, gây ra", example: "影響を与える。", example_meaning: "Gây ra ảnh hưởng/tác động." },
-      { front: "温める / 暖める", reading: "あたためる", meaning: "Làm ấm, hâm nóng", example: "スープを温める。", example_meaning: "Hâm nóng tô súp." },
-      { front: "当たる", reading: "あたる", meaning: "Trúng, đúng, va chạm", example: "宝くじが当たる。", example_meaning: "Trúng vé số." },
-      { front: "扱う", reading: "あつかう", meaning: "Xử lý, thao tác, đối xử", example: "丁寧に取り扱う。", example_meaning: "Thao tác/xử lý cẩn thận." },
-      { front: "悪化する", reading: "あっかする", meaning: "Trở nên tồi tệ, xấu đi", example: "容態が悪化する。", example_meaning: "Tình trạng sức khỏe trở nên xấu đi." },
-      { front: "圧縮する", reading: "あっしゅくする", meaning: "Nén (file, không khí)", example: "ファイルを圧縮する。", example_meaning: "Nén tập tin lại." },
-      { front: "圧倒する", reading: "あっとうする", meaning: "Áp đảo hoàn toàn", example: "相手を圧倒する。", example_meaning: "Áp đảo đối thủ." }
+    // Dữ liệu từ vựng trích xuất từ file MD
+    const vocabData = [
+      { vocab: "ああ言う", reading: "ああいう", meaning: "Nói như thế, nói như vậy", sentence: "ああ言う言い方は失礼だと思う。", sentenceMeaning: "Tôi nghĩ cách nói như thế là thất lễ." },
+      { vocab: "ああなる", reading: "ああなる", meaning: "Trở nên như thế, thành ra như thế", sentence: "準備不足だから、ああなるのは当たり前だ。", sentenceMeaning: "Vì chuẩn bị không kỹ nên thành ra như thế là lẽ tự nhiên." },
+      { vocab: "相争う", reading: "あいあらそう", meaning: "Tranh giành nhau, tranh chấp lẫn nhau", sentence: "二人の巨頭が相争う。", sentenceMeaning: "Hai vị cựu lãnh đạo tranh giành lẫn nhau." },
+      { vocab: "愛飲する", reading: "あいいんする", meaning: "Thích uống, thường xuyên uống", sentence: "父は毎朝緑茶を愛飲している。", sentenceMeaning: "Bố tôi mỗi sáng đều thích uống trà xanh." },
+      { vocab: "相打つ", reading: "あいうつ", meaning: "Đánh trả lẫn nhau, hòa nhau", sentence: "両者が相打つ形となった。", sentenceMeaning: "Cả hai bên rơi vào thế đánh ngang ngửa hòa nhau." },
+      { vocab: "愛玩する", reading: "あいがんする", meaning: "Yêu thương, cưng chiều", sentence: "小鳥を愛玩する。", sentenceMeaning: "Cưng chiều chú chim nhỏ." },
+      { vocab: "挨拶する", reading: "あいさつする", meaning: "Chào hỏi", sentence: "毎朝近所の人に挨拶する。", sentenceMeaning: "Mỗi sáng tôi đều chào hỏi người hàng xóm." },
+      { vocab: "愛する", reading: "あいする", meaning: "Yêu, yêu thương", sentence: "家族を深く愛している。", sentenceMeaning: "Tôi yêu gia đình sâu sắc." },
+      { vocab: "諦める", reading: "あきらめる", meaning: "Từ bỏ, bỏ cuộc", sentence: "夢を諦めない。", sentenceMeaning: "Không từ bỏ ước mơ." },
+      { vocab: "握手する", reading: "あくしゅする", meaning: "Bắt tay", sentence: "ガッチリと握手する。", sentenceMeaning: "Bắt tay thật chặt." }
     ];
 
-    let currentIndex = 0;
+    // Tạo HTML cho từng Flashcard
+    const container = document.getElementById('flashcard-container');
 
-    function updateCard() {
-      const card = document.getElementById('card');
-      card.classList.remove('flipped');
+    vocabData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = function() { this.classList.toggle('flipped'); };
 
-      setTimeout(() => {
-        const item = flashcards[currentIndex];
-        document.getElementById('word-front').innerText = item.front;
-        document.getElementById('word-reading').innerText = item.reading;
-        document.getElementById('word-meaning').innerText = item.meaning;
-        document.getElementById('word-example').innerText = item.example;
-        document.getElementById('word-example-meaning').innerText = item.example_meaning;
-        
-        document.getElementById('progress').innerText = `${currentIndex + 1} / ${flashcards.length}`;
-        
-        document.getElementById('btn-prev').disabled = currentIndex === 0;
-        document.getElementById('btn-next').disabled = currentIndex === flashcards.length - 1;
-      }, 150);
-    }
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="kanji">${item.vocab}</div>
+            <div class="reading">【${item.reading}】</div>
+            <div class="meaning-preview">${item.meaning}</div>
+            <button class="audio-btn" onclick="speakJapanese(event, '${item.reading}')">
+              🔊 Đọc từ
+            </button>
+          </div>
+          <div class="card-back">
+            <div class="example-jp">"${item.sentence}"</div>
+            <div class="example-vi">${item.sentenceMeaning}</div>
+            <button class="audio-btn sentence" onclick="speakJapanese(event, '${item.sentence}')">
+              🔊 Đọc câu
+            </button>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
 
-    function flipCard() {
-      document.getElementById('card').classList.toggle('flipped');
-    }
+    // Hàm phát âm tiếng Nhật bằng Web Speech API
+    function speakJapanese(event, text) {
+      event.stopPropagation(); // Ngăn sự kiện lật thẻ khi bấm nút đọc
 
-    function nextCard() {
-      if (currentIndex < flashcards.length - 1) {
-        currentIndex++;
-        updateCard();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Dừng câu đang đọc trước đó
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP'; // Thiết lập giọng đọc Tiếng Nhật
+        utterance.rate = 0.85;    // Tốc độ đọc tự nhiên cho người học
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Trình duyệt của bạn không hỗ trợ chức năng phát âm!');
       }
     }
-
-    function prevCard() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCard();
-      }
-    }
-
-    function shuffleCards() {
-      for (let i = flashcards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
-      }
-      currentIndex = 0;
-      updateCard();
-    }
-
-    // Khởi chạy ban đầu
-    updateCard();
   </script>
 </body>
 </html>
